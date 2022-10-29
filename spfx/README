@@ -1,0 +1,76 @@
+## Componer muestra
+Versión de sharepoint no finalizada
+
+
+### Uso con entornos de desarrollo de Docker
+
+Puede abrir este ejemplo en la función Entornos de desarrollo de Docker Desktop versión 4.12 o posterior.
+
+[Abrir en entornos de desarrollo de Docker <img src="../open_in_new.svg" alt="Abrir en entornos de desarrollo de Docker" align="top"/>](https://open.docker.com/dashboard/dev- envs?url=https://github.com/andresgarcia0313/compose/tree/master/spfx)
+
+### Servicio spfx
+
+Estructura del proyecto:
+```
+.
+├── spfx
+│   ├── Dockerfile
+│   ├── ...
+│   ├── ...
+│   ....
+└── componer.yaml
+```
+
+[_componer.yaml_](componer.yaml)
+```
+servicios:
+  web:
+    construcción: spfx
+    puertos:
+    - 4321:4321
+    ...
+
+```
+El archivo de redacción define una aplicación con un servicio `spfx`. La imagen para el servicio se construye con Dockerfile dentro del directorio `spfx` (parámetro de compilación).
+
+Al implementar la aplicación, docker compose asigna el puerto del contenedor 4321 al mismo puerto en el host como se especifica en el archivo.
+Asegúrese de que otro contenedor no esté utilizando el puerto 4321; de lo contrario, se debe cambiar el puerto.
+
+
+## Implementar con docker compose
+
+```
+$ ventana acoplable redactar -d
+Creando la red "spfx_default" con el controlador predeterminado
+edificio spfx
+Paso 1/7: DESDE el nodo: 10
+10: Tirando de biblioteca/nodo
+c0c53f743a40: tirar completo
+...
+...
+Construido con éxito efea5cef6851
+Etiquetado con éxito spfx_web: más reciente
+ADVERTENCIA: la imagen para el servicio web se creó porque aún no existía. Para reconstruir esta imagen, debe usar `docker-compose build` o `docker-compose up --build`.
+Creando spfx_web_1 ... hecho
+```
+
+
+## Resultado Esperado
+
+La lista de contenedores debe mostrar un contenedor en ejecución y la asignación de puertos de la siguiente manera:
+```
+$ ventana acoplable p.d.
+CONTENEDOR ID IMAGEN COMANDO CREADO ESTADO PUERTOS NOMBRES
+6884c228388e spfx_web "docker-entrypoint.s..." Hace 42 segundos Arriba 36 segundos 0.0.0.0:4321->4321/tcp spfx_web_1
+
+```
+
+Después de que se inicie la aplicación, vaya a `http://localhost:4321` en su navegador web.
+
+![página](salida.png)
+
+Detener y retirar el contenedor.
+
+```
+$ ventana acoplable redactar
+```

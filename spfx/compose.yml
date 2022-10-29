@@ -1,0 +1,10 @@
+services:
+  web:
+    build:
+      context: spfx
+      target: builder
+    ports:
+      - 4321:4321
+    volumes:
+      - ./spfx:/project
+      - /project/node_modules
